@@ -1,0 +1,51 @@
+/*
+		 * algorithm for Taat AND
+		 * 1. get the query (eg. term1 AND term2 AND term3)
+		 * 2. get the terms from the hashmap and extract the linked list values
+		 * 3. with n lists we should correlate with n terms as to how to intersect them.
+		 * 4. get each term's docID list and keep them. (so we have 3 lists)
+		 * 5. now intersect the smallest list with the next smallest list. (based on AND/ OR)
+		 * 6. the result of the intersection is stored in an intermediate result. this is kept
+		 * 	   for next iteration with the the next term. 
+		 * 
+		 *  Algorithm 1:
+		 *  1. get terms. cat, bat, rat
+		 *  2. get their linked list values
+		 *  3. now search for each term in each list. if its present then continue till last list.
+		 *  4. example:
+		 *  	
+		 *  5. 	cat - [1,2,4,5,6,7]
+		 *  	rat - [4,5,6,7]
+		 *  	mat - [1,4,7,9]
+		 *  6.	taat and
+		 *  	cat - 
+		 *  	intermediate = 1,2,4,5,6,7
+		 *  7. cat and rat
+		 *  	rat -
+		 *  	intermediate -
+		 *  	new intermediate - [4 5 6 7]
+		 *  8.	cat rat and mat
+		 *  	new intermediate - [4567]
+		 *  	mat - [1479]
+		 *  	result - [4 7] 
+		 *     
+		 *   
+		*/
+		
+		
+DAAT
+
+1.	Document at a time.  Means concurrently going through all the postings list of all the terms together
+	eg.
+2.	cat and rat and mat
+	cat - [20,40,100,200,250,1000]
+	rat - [1,2,3,50,90,100,500]
+	mat - [10,20,50,100,1000,2000]
+	
+3.	parallel search through cat,rat and mat's postings list.
+4.	keeping a reference pointer in the shortest available list first so as to optimize it.
+5.	first elements in all the postings list are compared and then they are iterated until they arrive at a DocID lesser than or equal to 
+	cat's.
+6.	now rat and mat iterate through it until they have a DocID equal to cat's docID or less.
+7.	we maintain a pointers array to get to know the pointers location in each postings list. 
+8.	Based on the operation of AND/OR the required docIDs are chosen into the final list.
